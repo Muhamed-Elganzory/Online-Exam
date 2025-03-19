@@ -1,0 +1,32 @@
+<article>
+  <ul class="flex w-fit items-center text-sm font-medium text-center ms-auto lg:pr-[5rem]">
+    <li class="me-2 relative">
+      <!-- data-dropdown-toggle="dropdown" -->
+      <button type="button" (click)="isDropDownOpen()" id="dropdownDefaultButton" class="cursor-pointer text-black bg-transparent ff-inter font-normal px-5 py-1 text-center inline-flex items-center" type="button">
+        English
+        <svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 6">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+        </svg>
+      </button>
+        @if(_isDropdownOpen){
+          <!-- Dropdown menu -->
+          <div id="dropdown" class="absolute top-10 right-0 z-10 bg-white divide-y divide-gray-100 rounded-lg shadow-sm w-44 ">
+            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+              <li>
+                <a href="#" class="cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">English</a>
+              </li>
+              <li>
+                <a href="#" class="cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Arabic</a>
+              </li>
+            </ul>
+          </div>
+        }
+    </li>
+    <li class="me-2">
+      <a routerLink="signin" routerLinkActive="shadow-main-box-shadow border border-main-border-color rounded-2xl font-normal" class="cursor-pointer inline-block px-5 py-1 text-second-color ff-inter font-bold">Sign in</a>
+    </li>
+    <li class="me-2">
+      <a routerLink="signup" routerLinkActive="shadow-main-box-shadow border border-main-border-color rounded-2xl font-normal" class="cursor-pointer inline-block px-5 py-1 text-second-color ff-inter font-bold">Register</a>
+    </li>
+  </ul>
+</article>

@@ -1,0 +1,30 @@
+/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+@source "../node_modules/flowbite";
+
+@theme{
+  --color-main-color: #122D9C;
+  --color-second-color: #4461F2;
+  --color-main-border-color: #E0E0E9;
+  --color-main-bg-inputs: #F9F9F9;
+  --shadow-main-box-shadow: 0px 11px 21px 0px #4461F21C;
+  --shadow-social-shadow: 0px 19px 31px 0px #4461F21C;
+  --shadow-btn-auth: 0px 18px 30px 0px #2F1C1C1A;
+
+}
+
+.ff-poppins {
+  font-family: "Poppins", sans-serif;
+  font-style: normal;
+}
+
+.ff-inter {
+  font-family: "Inter", sans-serif;
+  font-style: normal;
+}
+
+@layer utilities {
+  .btn-auth {
+    @apply cursor-pointer bg-second-color text-white rounded-2xl p-3 mt-10 font-[Poppins];
+  }
+}
