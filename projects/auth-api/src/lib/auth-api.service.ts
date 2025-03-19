@@ -14,6 +14,7 @@ import {VerifyCodeData} from './interfaces/verifyCode/verify-code.data.interface
 import {VerifyCodeRes} from './interfaces/verifyCode/verify-code-api.interface';
 import {ResetPasswordData} from './interfaces/resetPassword/reset-password-data.interface';
 import {ResetPasswordRes} from './interfaces/resetPassword/reset-password-api.interface';
+import {API_BASE_URL} from './token/api-token';
 
 @Injectable({
   providedIn: 'root'
@@ -23,41 +24,40 @@ export class AuthApiService implements AuthApi {
   private readonly httpClient: HttpClient = inject (HttpClient);
   private readonly authAPIAdaptorService: AuthAPIAdaptorService = inject (AuthAPIAdaptorService);
   resetEmail: WritableSignal <string> = signal <string> ('');
+  private readonly apiConfig: string = inject (API_BASE_URL);
 
   sigIn(data: SignInData): Observable <SignInUpRes> {
-    return this.httpClient.post(AuthApiEndpoints.SIGNIN, data).pipe(
+    return this.httpClient.post(this.apiConfig + AuthApiEndpoints.SIGNIN, data).pipe(
       map((res: any): SignInUpRes => this.authAPIAdaptorService.adaptRes(res)),
       catchError((err: SignInUpApiErr): Observable <any> => throwError((): SignInUpErr => this.authAPIAdaptorService.adaptErr(err))),
     );
   }
 
   signUp(data: SignUpData): Observable <SignInUpRes> {
-    return this.httpClient.post(AuthApiEndpoints.SIGNUP, data).pipe(
+    return this.httpClient.post(this.apiConfig + AuthApiEndpoints.SIGNUP, data).pipe(
       map((res: any): SignInUpRes => this.authAPIAdaptorService.adaptRes(res)),
       catchError((err: SignInUpApiErr): Observable <any> => throwError((): SignInUpErr => this.authAPIAdaptorService.adaptErr(err)))
     );
   }
-//ForgetPasswordApiRes
+
   forgetPassword(data: ForgetPasswordData): Observable <ForgetPasswordRes> {
-    return this.httpClient.post(AuthApiEndpoints.FORGET_PASSWORD, data).pipe(
+    return this.httpClient.post(this.apiConfig + AuthApiEndpoints.FORGET_PASSWORD, data).pipe(
       map((res: any): ForgetPasswordRes => this.authAPIAdaptorService.adaptForgetPassRes(res)),
       catchError((err: SignInUpApiErr): Observable <any> => throwError((): SignInUpErr => this.authAPIAdaptorService.adaptErr(err)))
     );
   }
 
   resetCode(data: VerifyCodeData): Observable <VerifyCodeRes> {
-    return this.httpClient.post(AuthApiEndpoints.VERIFY_CODE, data).pipe(
+    return this.httpClient.post(this.apiConfig + AuthApiEndpoints.VERIFY_CODE, data).pipe(
       map((res: any): ForgetPasswordRes => this.authAPIAdaptorService.adaptVerifyRes(res)),
       catchError((err: ForgetPasswordRes): Observable <any> => throwError((): ForgetPasswordRes => this.authAPIAdaptorService.adapt_VerifyCode_Err(err)))
     );
   }
 
   resetPassword(data: ResetPasswordData): Observable <ResetPasswordRes> {
-    return this.httpClient.put(AuthApiEndpoints.RESET_PASSWORD, data).pipe(
+    return this.httpClient.put(this.apiConfig + AuthApiEndpoints.RESET_PASSWORD, data).pipe(
       map((res: any): ResetPasswordRes => this.authAPIAdaptorService.adaptResetPass(res)),
       catchError((err: any): Observable <any> => throwError((): SignInUpErr => this.authAPIAdaptorService.adaptErr(err)))
     );
   }
-
 }
-// rayne.imir@thefluent.org

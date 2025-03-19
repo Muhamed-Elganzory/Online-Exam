@@ -1,15 +1,24 @@
-import {InjectionToken} from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
+export const API_BASE_URL = new InjectionToken <string> ('API_BASE_URL', {
+  providedIn: 'root',
+  factory: (): string => 'https://exam.elevateegy.com/api/v1/'
+});
+
+/*
 export interface BaseUrlConfig {
   baseURL: string;
 }
 
-export const API_BASE_URL = new InjectionToken <{[key: string]: string}> ('API_BASE_URL', {
-  providedIn: 'root',
-  factory: () => ({
-    baseURL:'https://exam.elevateegy.com/api/v1/'
-  })
-});
+
+    export const API_BASE_URL = new InjectionToken <string> ('API_BASE_URL');
+
+    const injector: Injector = Injector.create({
+      providers: [{
+        provide: API_BASE_URL, useValue: 'https://exam.elevateegy.com/api/v1/',
+      }]
+    })
+ */
 
 /*
 factory: () =>({

@@ -89,7 +89,6 @@ export class VerifyCodeComponent implements OnInit, OnDestroy {
         });
       }
     })
-    console.log(payLoad);
   }
 
   ngOnDestroy(): void {

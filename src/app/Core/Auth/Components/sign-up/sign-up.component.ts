@@ -90,7 +90,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
         });
       }
     })
-    console.log(this.signUpFormGroup.value);
     this.signUpFormGroup.reset();
     this.isLoading = false;
   }
