@@ -6,9 +6,9 @@ import {
   ValidationMessagesComponent
 } from '../validation-messages/validation-messages.component';
 import {NgClass} from '@angular/common';
-import {AuthApiService} from 'auth-api';
 import {ToastrService} from 'ngx-toastr';
 import {Subscription} from 'rxjs';
+import {AuthApiService} from 'auth-api-elev-onl-exa';
 
 @Component({
   selector: 'app-verify-code',

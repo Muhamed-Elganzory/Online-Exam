@@ -6,10 +6,11 @@ import {NgClass} from '@angular/common';
 import {
   ValidationMessagesComponent
 } from '../validation-messages/validation-messages.component';
-import {AuthApiService} from 'auth-api';
+
 import {ToastrService} from 'ngx-toastr';
 import {Subscription} from 'rxjs';
 import {CookieService} from 'ngx-cookie-service';
+import {AuthApiService} from 'auth-api-elev-onl-exa';
 
 @Component({
   selector: 'app-sign-up',

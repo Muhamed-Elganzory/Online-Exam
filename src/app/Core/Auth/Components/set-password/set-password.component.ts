@@ -3,10 +3,9 @@ import {SocialComponent} from "../../../Layouts/Components/auth-layout/social/so
 import {AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgClass} from '@angular/common';
 import {ValidationMessagesComponent} from '../validation-messages/validation-messages.component';
-import {AuthApiService} from 'auth-api';
-import {Router} from '@angular/router';
 import {ToastrService} from 'ngx-toastr';
 import {Subscription} from 'rxjs';
+import {AuthApiService} from 'auth-api-elev-onl-exa';
 
 
 @Component({
