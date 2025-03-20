@@ -5,7 +5,7 @@ import {provideHttpClient, withFetch} from '@angular/common/http';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {provideToastr} from 'ngx-toastr';
 import {BASE_TEST_URL} from './Environments/base-test-url';
-import {API_BASE_URL} from 'auth-api';
+import { API_BASE_URL} from 'auth-api-elev-onl-exa';
 
 export const appConfig: ApplicationConfig = {
   providers: [
