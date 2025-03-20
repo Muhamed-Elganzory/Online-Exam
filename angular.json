@@ -52,7 +52,10 @@
           },
           "configurations": {
             "production": {
-              "fileReplacements": [],
+              "fileReplacements": [{
+                "replace": "./src/app/Environments/base-prod-url.ts",
+                "with": "./src/app/Environments/base-test-url.ts"
+              }],
               "budgets": [
                 {
                   "type": "initial",

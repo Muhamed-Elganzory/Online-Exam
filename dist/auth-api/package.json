@@ -1,6 +1,6 @@
 {
   "name": "auth-api",
-  "version": "0.0.0-watch+1742427684111",
+  "version": "0.0.0-watch+1742429346897",
   "peerDependencies": {
     "@angular/common": "^19.2.0",
     "@angular/core": "^19.2.0"
