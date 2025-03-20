@@ -3,7 +3,6 @@ import {Adaptor} from '../interfaces/adaptor.interface';
 import {SignInUpApiRes, SignInUpRes} from '../interfaces/auth/auth-api-res.interface';
 import {SignInUpApiErr, SignInUpErr} from '../interfaces/auth/auth-api-err.interface';
 import {ResetPasswordRes} from '../interfaces/resetPassword/reset-password-api.interface';
-import {ForgetPasswordRes} from '../interfaces/forgetPassword/forget-password-api.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +56,4 @@ export class AuthAPIAdaptorService implements Adaptor {
       token: data.token,
     };
   }
-
-
 }

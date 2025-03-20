@@ -1,14 +1,14 @@
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {Router} from "@angular/router";
-import {SocialComponent} from "../../../Layouts/Components/auth-layout/social/social.component";
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {
-  ValidationMessagesComponent
-} from '../validation-messages/validation-messages.component';
 import {NgClass} from '@angular/common';
-import {ToastrService} from 'ngx-toastr';
 import {Subscription} from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
 import {AuthApiService} from 'auth-api-elev-onl-exa';
+import {SocialComponent} from "../../../Layouts/Components/auth-layout/social/social.component";
+import {ValidationMessagesComponent} from '../validation-messages/validation-messages.component';
+
+
 
 @Component({
   selector: 'app-verify-code',
@@ -51,7 +51,6 @@ export class VerifyCodeComponent implements OnInit, OnDestroy {
 
     this.authSubscription = this.authApiService.resetCode(this.verifyFormGroup.value).subscribe({
       next: (res: any): void => {
-
         this.toastrService.success('Success', '', {
           progressBar: true,
           timeOut: 2000
@@ -75,6 +74,7 @@ export class VerifyCodeComponent implements OnInit, OnDestroy {
     const payLoad = {
       email: this.authApiService.resetEmail()
     }
+
     this.authApiService.forgetPassword(payLoad).subscribe({
       next: (res: any): void => {
         this.toastrService.success(res.message, res.info + payLoad.email, {

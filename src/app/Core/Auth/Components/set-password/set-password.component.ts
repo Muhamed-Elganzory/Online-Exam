@@ -1,12 +1,11 @@
-import {Component, inject, OnDestroy, OnInit} from '@angular/core';
-import {SocialComponent} from "../../../Layouts/Components/auth-layout/social/social.component";
 import {AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {NgClass} from '@angular/common';
-import {ValidationMessagesComponent} from '../validation-messages/validation-messages.component';
-import {ToastrService} from 'ngx-toastr';
 import {Subscription} from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
 import {AuthApiService} from 'auth-api-elev-onl-exa';
-
+import {SocialComponent} from "../../../Layouts/Components/auth-layout/social/social.component";
+import {ValidationMessagesComponent} from '../validation-messages/validation-messages.component';
 
 @Component({
   selector: 'app-set-password',

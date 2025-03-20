@@ -1,13 +1,14 @@
+import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {RouterLink} from "@angular/router";
-import {SocialComponent} from '../../../Layouts/Components/auth-layout/social/social.component';
-import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgClass} from '@angular/common';
-import {ValidationMessagesComponent} from '../validation-messages/validation-messages.component';
-import { AuthApiService } from 'auth-api-elev-onl-exa';
 import {CookieService} from 'ngx-cookie-service';
-import { ToastrService } from 'ngx-toastr';
 import {Subscription} from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { AuthApiService } from 'auth-api-elev-onl-exa';
+import {SocialComponent} from '../../../Layouts/Components/auth-layout/social/social.component';
+import {ValidationMessagesComponent} from '../validation-messages/validation-messages.component';
+
 
 @Component({
   selector: 'app-sign-in',
@@ -24,9 +25,9 @@ import {Subscription} from 'rxjs';
 export class SignInComponent implements OnInit, OnDestroy {
 
   private readonly formBuilder: FormBuilder = inject (FormBuilder);
-  private readonly authApiService: AuthApiService = inject( AuthApiService);
+  private readonly authApiService: AuthApiService = inject ( AuthApiService);
   private readonly cookieService: CookieService = inject (CookieService);
-  private readonly toastrService: ToastrService = inject(ToastrService)
+  private readonly toastrService: ToastrService = inject (ToastrService)
   private authSubscription!: Subscription;
 
   isLoading: boolean = false;

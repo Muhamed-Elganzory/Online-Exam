@@ -1,16 +1,14 @@
+import {AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {RouterLink} from '@angular/router';
-import {SocialComponent} from '../../../Layouts/Components/auth-layout/social/social.component';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {NgClass} from '@angular/common';
-import {
-  ValidationMessagesComponent
-} from '../validation-messages/validation-messages.component';
-
-import {ToastrService} from 'ngx-toastr';
 import {Subscription} from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
 import {CookieService} from 'ngx-cookie-service';
 import {AuthApiService} from 'auth-api-elev-onl-exa';
+import {ValidationMessagesComponent} from '../validation-messages/validation-messages.component';
+import {SocialComponent} from '../../../Layouts/Components/auth-layout/social/social.component';
+
 
 @Component({
   selector: 'app-sign-up',
@@ -36,7 +34,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
   signUpFormGroup!: FormGroup;
   isShowPassword: boolean = false;
   isShow_rePassword: boolean = false;
-
+  password: string = '';
+  rePassword: string = '';
+  username: string = '';
 
   ngOnInit(): void {
     this.signUpForm();
@@ -55,10 +55,10 @@ export class SignUpComponent implements OnInit, OnDestroy {
   };
 
   passwordMatch(control: AbstractControl): {mismatch: boolean} | null {
-    const password: string = control.get('password')?.value;
-    const rePassword: string = control.get('rePassword')?.value;
+    this.password = control.get('password')?.value;
+    this.rePassword  = control.get('rePassword')?.value;
 
-    if(password === rePassword){
+    if(this.password === this.rePassword){
       return null;
     } else {
       return {
@@ -74,8 +74,9 @@ export class SignUpComponent implements OnInit, OnDestroy {
       this.signUpFormGroup.markAllAsTouched();
       return;
     }
-    const username: string = this.signUpFormGroup.get('firstName')?.value + this.signUpFormGroup.get('lastName')?.value;
-    this.signUpFormGroup.get('username')?.setValue(username)
+
+    this.username = this.signUpFormGroup.get('firstName')?.value + this.signUpFormGroup.get('lastName')?.value;
+    this.signUpFormGroup.get('username')?.setValue(this.username)
 
     this.authSubscription = this.authApiService.signUp(this.signUpFormGroup.value).subscribe({
       next: (res: any) => {
@@ -83,14 +84,16 @@ export class SignUpComponent implements OnInit, OnDestroy {
           progressBar: true,
           timeOut: 2000
         });
+
         this.cookieService.set('token', res.token);
+
       }, error: (err: any) => {
         this.toastrService.error(err.message, '', {
           progressBar: true,
           timeOut: 2000
         });
       }
-    })
+    });
     this.signUpFormGroup.reset();
     this.isLoading = false;
   }

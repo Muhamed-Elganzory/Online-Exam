@@ -1,14 +1,12 @@
-import {Component, inject, OnDestroy, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
-import {SocialComponent} from '../../../Layouts/Components/auth-layout/social/social.component';
 import {FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {NgClass} from '@angular/common';
-import {
-  ValidationMessagesComponent
-} from '../validation-messages/validation-messages.component';
-import {ToastrService} from 'ngx-toastr';
+import {Router} from '@angular/router';
 import {Subscription} from 'rxjs';
+import {ToastrService} from 'ngx-toastr';
 import {AuthApiService} from 'auth-api-elev-onl-exa';
+import {SocialComponent} from '../../../Layouts/Components/auth-layout/social/social.component';
+import {ValidationMessagesComponent} from '../validation-messages/validation-messages.component';
 
 @Component({
   selector: 'app-forget-password',
@@ -31,6 +29,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
 
   isLoading: boolean = false;
   forgetFormGroup!: FormGroup;
+  emailValue: string = '';
 
   ngOnInit(): void {
     this.forgetForm();
@@ -48,7 +47,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const emailValue: string = this.forgetFormGroup.get('email')?.value;
+    this.emailValue = this.forgetFormGroup.get('email')?.value;
 
     this.authSubscription = this.authApiService.forgetPassword(this.forgetFormGroup.value).subscribe({
       next: (res: any) => {
@@ -56,8 +55,10 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
           progressBar: true,
           timeOut: 2000
         });
-        this.authApiService.resetEmail.set(emailValue);
+
+        this.authApiService.resetEmail.set(this.emailValue);
         this.router.navigateByUrl('/verify-code');
+
       },error: (err: any) => {
         this.toastrService.error(err.message, '', {
           progressBar: true,
@@ -75,8 +76,8 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const emailValue: string = this.forgetFormGroup.get('email')?.value;
-    this.authApiService.resetEmail.set(emailValue);
+    this.emailValue = this.forgetFormGroup.get('email')?.value;
+    this.authApiService.resetEmail.set(this.emailValue);
 
     this.router.navigateByUrl('signin');
     this.forgetFormGroup.reset();
