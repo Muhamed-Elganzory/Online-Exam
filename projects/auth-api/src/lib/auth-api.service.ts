@@ -21,10 +21,11 @@ import {API_BASE_URL} from './token/api-token';
 })
 export class AuthApiService implements AuthApi {
 
-  private readonly httpClient: HttpClient = inject (HttpClient);
-  private readonly authAPIAdaptorService: AuthAPIAdaptorService = inject (AuthAPIAdaptorService);
-  resetEmail: WritableSignal <string> = signal <string> ('');
   private readonly apiConfig: string = inject (API_BASE_URL);
+  private readonly httpClient: HttpClient = inject (HttpClient);
+  emailSignal: WritableSignal <string> = signal <string> ('');
+  passwordSignal: WritableSignal <string> = signal <string> ('');
+  private readonly authAPIAdaptorService: AuthAPIAdaptorService = inject (AuthAPIAdaptorService);
 
   sigIn(data: SignInData): Observable <SignInUpRes> {
     return this.httpClient.post(this.apiConfig + AuthApiEndpoints.SIGNIN, data).pipe(

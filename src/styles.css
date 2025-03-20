@@ -28,3 +28,6 @@
     @apply cursor-pointer bg-second-color text-white rounded-2xl p-3 mt-10 font-[Poppins];
   }
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

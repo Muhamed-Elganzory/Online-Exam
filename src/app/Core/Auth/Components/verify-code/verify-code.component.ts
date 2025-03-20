@@ -8,8 +8,6 @@ import {AuthApiService} from 'auth-api-elev-onl-exa';
 import {SocialComponent} from "../../../Layouts/Components/auth-layout/social/social.component";
 import {ValidationMessagesComponent} from '../validation-messages/validation-messages.component';
 
-
-
 @Component({
   selector: 'app-verify-code',
   imports: [
@@ -72,7 +70,7 @@ export class VerifyCodeComponent implements OnInit, OnDestroy {
 
   resend(): void {
     const payLoad = {
-      email: this.authApiService.resetEmail()
+      email: this.authApiService.emailSignal()
     }
 
     this.authApiService.forgetPassword(payLoad).subscribe({

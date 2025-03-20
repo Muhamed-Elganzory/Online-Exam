@@ -1,14 +1,14 @@
 import {AbstractControl, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {Component, inject, OnDestroy, OnInit} from '@angular/core';
-import {RouterLink} from '@angular/router';
+import { Router, RouterLink} from '@angular/router';
 import {NgClass} from '@angular/common';
-import {Subscription} from 'rxjs';
+import { Subscription} from 'rxjs';
+import {Store} from '@ngrx/store';
 import {ToastrService} from 'ngx-toastr';
-import {CookieService} from 'ngx-cookie-service';
 import {AuthApiService} from 'auth-api-elev-onl-exa';
+import {setToken} from '../../../../Store/Actions/token.action';
 import {ValidationMessagesComponent} from '../validation-messages/validation-messages.component';
 import {SocialComponent} from '../../../Layouts/Components/auth-layout/social/social.component';
-
 
 @Component({
   selector: 'app-sign-up',
@@ -24,19 +24,20 @@ import {SocialComponent} from '../../../Layouts/Components/auth-layout/social/so
 })
 export class SignUpComponent implements OnInit, OnDestroy {
 
-  private readonly formBuilder: FormBuilder = inject (FormBuilder);
-  private readonly authApiService: AuthApiService = inject( AuthApiService );
-  private readonly cookieService: CookieService = inject (CookieService);
-  private readonly toastrService: ToastrService = inject(ToastrService)
   private authSubscription!: Subscription;
+  private readonly store: Store = inject (Store);
+  private readonly router: Router = inject (Router);
+  private readonly formBuilder: FormBuilder = inject (FormBuilder);
+  private readonly toastrService: ToastrService = inject(ToastrService);
+  private readonly authApiService: AuthApiService = inject( AuthApiService );
 
+  username: string = '';
   isLoading: boolean = false;
   signUpFormGroup!: FormGroup;
+  emailFromInput: string = '';
+  passwordFromInput: string = '';
   isShowPassword: boolean = false;
   isShow_rePassword: boolean = false;
-  password: string = '';
-  rePassword: string = '';
-  username: string = '';
 
   ngOnInit(): void {
     this.signUpForm();
@@ -55,10 +56,10 @@ export class SignUpComponent implements OnInit, OnDestroy {
   };
 
   passwordMatch(control: AbstractControl): {mismatch: boolean} | null {
-    this.password = control.get('password')?.value;
-    this.rePassword  = control.get('rePassword')?.value;
+    const _password: string = control.get('password')?.value;
+    const _rePassword: string  = control.get('rePassword')?.value;
 
-    if(this.password === this.rePassword){
+    if(_password === _rePassword){
       return null;
     } else {
       return {
@@ -75,26 +76,27 @@ export class SignUpComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.username = this.signUpFormGroup.get('firstName')?.value + this.signUpFormGroup.get('lastName')?.value;
-    this.signUpFormGroup.get('username')?.setValue(this.username)
+    this.injectUserName();
+    this.setOnSignals();
 
     this.authSubscription = this.authApiService.signUp(this.signUpFormGroup.value).subscribe({
-      next: (res: any) => {
+      next: (res: any): void => {
         this.toastrService.success(res.message, '', {
           progressBar: true,
           timeOut: 2000
         });
 
-        this.cookieService.set('token', res.token);
+        this.store.dispatch(setToken({value: res.token}));
+        this.goToSignin();
 
-      }, error: (err: any) => {
+      }, error: (err: any): void => {
         this.toastrService.error(err.message, '', {
           progressBar: true,
           timeOut: 2000
         });
       }
     });
-    this.signUpFormGroup.reset();
+
     this.isLoading = false;
   }
 
@@ -104,6 +106,24 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   show_rePassword(): void{
     this.isShow_rePassword = !this.isShow_rePassword;
+  }
+
+  injectUserName(): void{
+    this.username = this.signUpFormGroup.get('firstName')?.value + this.signUpFormGroup.get('lastName')?.value;
+    this.signUpFormGroup.get('username')?.setValue(this.username);
+  }
+
+  setOnSignals(): void {
+    this.emailFromInput = this.signUpFormGroup.get('email')?.value;
+    this.passwordFromInput = this.signUpFormGroup.get('password')?.value;
+
+    this.authApiService.emailSignal.set(this.emailFromInput);
+    this.authApiService.passwordSignal.set(this.passwordFromInput);
+    this.signUpFormGroup.reset();
+  }
+
+  goToSignin (): void {
+    this.router.navigate(['/signin']);
   }
 
   ngOnDestroy(){

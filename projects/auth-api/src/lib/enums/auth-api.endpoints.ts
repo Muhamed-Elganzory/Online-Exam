@@ -1,14 +1,14 @@
-export class AuthApiEndpoints {
+export enum AuthApiEndpoints {
 
-  static SIGNIN: string = 'auth/signin';
-  static SIGNUP: string = 'auth/signup';
-  static FORGET_PASSWORD: string = 'auth/forgotPassword';
-  static VERIFY_CODE: string = 'auth/verifyResetCode';
-  static RESET_PASSWORD: string = 'auth/resetPassword';
-  static CHANGE_PASSWORD: string = 'auth/changePassword';
-  static DELETE_ACCOUNT: string = 'auth/deleteMe';
-  static EDITE_PROFILE: string = 'auth/editProfile';
-  static LOGOUT: string = 'auth/logout';
-  static GET_LOGGED_USER: string = 'auth/profileData';
+  SIGNIN = 'auth/signin',
+  SIGNUP = 'auth/signup',
+  FORGET_PASSWORD = 'auth/forgotPassword',
+  VERIFY_CODE = 'auth/verifyResetCode',
+  RESET_PASSWORD = 'auth/resetPassword',
+  CHANGE_PASSWORD = 'auth/changePassword',
+  DELETE_ACCOUNT = 'auth/deleteMe',
+  EDITE_PROFILE = 'auth/editProfile',
+  LOGOUT = 'auth/logout',
+  GET_LOGGED_USER = 'auth/profileData',
 
 }

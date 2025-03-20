@@ -13,6 +13,5 @@ export const routes: Routes = [
   },
 ];
 
-// quhu@mailinator.com - xywawyt@mailinator.com - socaned402@bankrau.com
+// ethical.centipede.iwbl@letterhaven.net
 // Pa$$w0rd!
-// 137754

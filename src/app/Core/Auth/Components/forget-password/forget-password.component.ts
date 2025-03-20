@@ -56,7 +56,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
           timeOut: 2000
         });
 
-        this.authApiService.resetEmail.set(this.emailValue);
+        this.authApiService.emailSignal.set(this.emailValue);
         this.router.navigateByUrl('/verify-code');
 
       },error: (err: any) => {
@@ -77,7 +77,7 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
     }
 
     this.emailValue = this.forgetFormGroup.get('email')?.value;
-    this.authApiService.resetEmail.set(this.emailValue);
+    this.authApiService.emailSignal.set(this.emailValue);
 
     this.router.navigateByUrl('signin');
     this.forgetFormGroup.reset();

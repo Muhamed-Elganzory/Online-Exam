@@ -55,13 +55,6 @@ export class SetPasswordComponent implements OnInit, OnDestroy {
     }
   }
 
-  checkEmail(): void {
-    if (this.authApiService.resetEmail()){
-      const emailValue: string = this.authApiService.resetEmail();
-      this.setPasswordFormGroup.get('email')?.setValue(emailValue);
-    }
-  }
-
   login(): void {
     this.isLoading = true;
 
@@ -71,7 +64,7 @@ export class SetPasswordComponent implements OnInit, OnDestroy {
     }
 
     const payLoad = {
-      email: this.authApiService.resetEmail(),
+      email: this.authApiService.emailSignal(),
       newPassword: this.setPasswordFormGroup.get('password')?.value
     }
 
@@ -106,5 +99,4 @@ export class SetPasswordComponent implements OnInit, OnDestroy {
       this.authSubscription.unsubscribe();
     }
   }
-
 }
