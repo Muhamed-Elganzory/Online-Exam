@@ -9,6 +9,7 @@ import {AuthApiService} from 'auth-api-elev-onl-exa';
 import {setToken} from '../../../../Store/Actions/token.action';
 import {ValidationMessagesComponent} from '../validation-messages/validation-messages.component';
 import {SocialComponent} from '../../../Layouts/Components/auth-layout/social/social.component';
+import {AuthBtnComponent} from '../auth-btn/auth-btn.component';
 
 @Component({
   selector: 'app-sign-up',
@@ -18,6 +19,7 @@ import {SocialComponent} from '../../../Layouts/Components/auth-layout/social/so
     ReactiveFormsModule,
     NgClass,
     ValidationMessagesComponent,
+    AuthBtnComponent,
   ],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css'
@@ -31,6 +33,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
   private readonly toastrService: ToastrService = inject(ToastrService);
   private readonly authApiService: AuthApiService = inject( AuthApiService );
 
+  btnTitle: string = '';
   username: string = '';
   isLoading: boolean = false;
   signUpFormGroup!: FormGroup;
@@ -38,6 +41,10 @@ export class SignUpComponent implements OnInit, OnDestroy {
   passwordFromInput: string = '';
   isShowPassword: boolean = false;
   isShow_rePassword: boolean = false;
+
+  constructor() {
+    this.btnTitle = 'Create Account';
+  }
 
   ngOnInit(): void {
     this.signUpForm();
@@ -48,7 +55,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
       firstName: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
       lastName: new FormControl ('', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]),
       username: new FormControl (''),
-      phone: new FormControl ('', [Validators.required]),
+      phone: new FormControl ('', [Validators.required]).value?.toString(),
       email: new FormControl ('', [Validators.required, Validators.email]),
       password: new FormControl ('', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]),
       rePassword: new FormControl ('', [Validators.required])
@@ -76,8 +83,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
       return;
     }
 
-    this.injectUserName();
-    this.setOnSignals();
+    this.injectUserNameToForm();
+    this.setEmailAndPasswordToInput();
 
     this.authSubscription = this.authApiService.signUp(this.signUpFormGroup.value).subscribe({
       next: (res: any): void => {
@@ -87,6 +94,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
         });
 
         this.store.dispatch(setToken({value: res.token}));
+        this.signUpFormGroup.reset();
         this.goToSignin();
 
       }, error: (err: any): void => {
@@ -108,18 +116,17 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.isShow_rePassword = !this.isShow_rePassword;
   }
 
-  injectUserName(): void{
+  injectUserNameToForm(): void{
     this.username = this.signUpFormGroup.get('firstName')?.value + this.signUpFormGroup.get('lastName')?.value;
     this.signUpFormGroup.get('username')?.setValue(this.username);
   }
 
-  setOnSignals(): void {
+  setEmailAndPasswordToInput(): void {
     this.emailFromInput = this.signUpFormGroup.get('email')?.value;
     this.passwordFromInput = this.signUpFormGroup.get('password')?.value;
 
     this.authApiService.emailSignal.set(this.emailFromInput);
     this.authApiService.passwordSignal.set(this.passwordFromInput);
-    this.signUpFormGroup.reset();
   }
 
   goToSignin (): void {

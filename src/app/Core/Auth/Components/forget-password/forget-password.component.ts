@@ -7,6 +7,7 @@ import {ToastrService} from 'ngx-toastr';
 import {AuthApiService} from 'auth-api-elev-onl-exa';
 import {SocialComponent} from '../../../Layouts/Components/auth-layout/social/social.component';
 import {ValidationMessagesComponent} from '../validation-messages/validation-messages.component';
+import {AuthBtnComponent} from '../auth-btn/auth-btn.component';
 
 @Component({
   selector: 'app-forget-password',
@@ -14,7 +15,8 @@ import {ValidationMessagesComponent} from '../validation-messages/validation-mes
     SocialComponent,
     ReactiveFormsModule,
     NgClass,
-    ValidationMessagesComponent
+    ValidationMessagesComponent,
+    AuthBtnComponent
   ],
   templateUrl: './forget-password.component.html',
   styleUrl: './forget-password.component.css'
@@ -27,9 +29,14 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
   private readonly toastrService: ToastrService = inject(ToastrService)
   private authSubscription!: Subscription;
 
+  btnTitle: string = '';
+  emailValue: string = '';
   isLoading: boolean = false;
   forgetFormGroup!: FormGroup;
-  emailValue: string = '';
+
+  constructor() {
+    this.btnTitle = 'Sign in';
+  }
 
   ngOnInit(): void {
     this.forgetForm();
@@ -58,7 +65,6 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
 
         this.authApiService.emailSignal.set(this.emailValue);
         this.router.navigateByUrl('/verify-code');
-
       },error: (err: any) => {
         this.toastrService.error(err.message, '', {
           progressBar: true,
@@ -76,11 +82,14 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.setEmailToInput();
+    this.forgetFormGroup.reset();
+    this.router.navigateByUrl('signin');
+  }
+
+  setEmailToInput(): void{
     this.emailValue = this.forgetFormGroup.get('email')?.value;
     this.authApiService.emailSignal.set(this.emailValue);
-
-    this.router.navigateByUrl('signin');
-    this.forgetFormGroup.reset();
   }
 
   ngOnDestroy(): void {

@@ -9,6 +9,7 @@ import {SocialComponent} from '../../../Layouts/Components/auth-layout/social/so
 import {ValidationMessagesComponent} from '../validation-messages/validation-messages.component';
 import {Store} from '@ngrx/store';
 import {setToken} from '../../../../Store/Actions/token.action';
+import {AuthBtnComponent} from '../auth-btn/auth-btn.component';
 
 @Component({
   selector: 'app-sign-in',
@@ -18,6 +19,7 @@ import {setToken} from '../../../../Store/Actions/token.action';
     ReactiveFormsModule,
     NgClass,
     ValidationMessagesComponent,
+    AuthBtnComponent,
   ],
   templateUrl: './sign-in.component.html',
   styleUrl: './sign-in.component.css'
@@ -35,6 +37,11 @@ export class SignInComponent implements OnInit, OnDestroy {
   isLoading: boolean = false;
   signInFormGroup!: FormGroup;
   isShowPassword: boolean = false;
+  btnTitle: string = '';
+
+  constructor() {
+    this.btnTitle = 'Sign In';
+  }
 
   ngOnInit(): void {
     this.loginForm();
@@ -73,7 +80,6 @@ export class SignInComponent implements OnInit, OnDestroy {
         });
 
         this.store.dispatch(setToken({value: res.token}));
-
       }, error: (err: any): void => {
         this.toastrService.error(err.message, '', {
           progressBar: true,

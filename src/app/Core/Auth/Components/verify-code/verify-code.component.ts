@@ -7,6 +7,7 @@ import {ToastrService} from 'ngx-toastr';
 import {AuthApiService} from 'auth-api-elev-onl-exa';
 import {SocialComponent} from "../../../Layouts/Components/auth-layout/social/social.component";
 import {ValidationMessagesComponent} from '../validation-messages/validation-messages.component';
+import {AuthBtnComponent} from '../auth-btn/auth-btn.component';
 
 @Component({
   selector: 'app-verify-code',
@@ -14,7 +15,8 @@ import {ValidationMessagesComponent} from '../validation-messages/validation-mes
     SocialComponent,
     ReactiveFormsModule,
     ValidationMessagesComponent,
-    NgClass
+    NgClass,
+    AuthBtnComponent
   ],
   templateUrl: './verify-code.component.html',
   styleUrl: './verify-code.component.css'
@@ -27,8 +29,13 @@ export class VerifyCodeComponent implements OnInit, OnDestroy {
   private readonly toastrService: ToastrService = inject(ToastrService)
   private authSubscription!: Subscription;
 
-  verifyFormGroup!: FormGroup;
+  btnTitle: string = '';
   isLoading: boolean = false;
+  verifyFormGroup!: FormGroup;
+
+  constructor() {
+    this.btnTitle = 'Verify';
+  }
 
   ngOnInit(): void {
     this.verifyForm();
@@ -48,7 +55,7 @@ export class VerifyCodeComponent implements OnInit, OnDestroy {
     }
 
     this.authSubscription = this.authApiService.resetCode(this.verifyFormGroup.value).subscribe({
-      next: (res: any): void => {
+      next: (): void => {
         this.toastrService.success('Success', '', {
           progressBar: true,
           timeOut: 2000
@@ -56,7 +63,7 @@ export class VerifyCodeComponent implements OnInit, OnDestroy {
 
         this.router.navigate(['/set-password']);
 
-      }, error: (err: any): void => {
+      }, error: (): void => {
         this.toastrService.error('Http failure response', '', {
           progressBar: true,
           timeOut: 2000
