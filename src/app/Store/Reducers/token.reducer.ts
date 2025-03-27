@@ -1,7 +1,7 @@
 import {createReducer, on} from '@ngrx/store';
 import {setToken} from '../Actions/token.action';
 
-const INITIAL_STATE: string = 'Initial';
+const INITIAL_STATE: string = '';
 
 export const tokenReducer = createReducer(
   INITIAL_STATE,

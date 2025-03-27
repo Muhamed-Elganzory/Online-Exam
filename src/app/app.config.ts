@@ -4,7 +4,7 @@ import { routes } from './app.routes';
 import {provideHttpClient, withFetch, withInterceptors} from '@angular/common/http';
 import {provideAnimations} from '@angular/platform-browser/animations';
 import {provideToastr} from 'ngx-toastr';
-import {BASE_TEST_URL} from './Environments/base-test-url';
+import {DEV_URL} from './Environments/development';
 import { API_BASE_URL } from 'auth-api-elev-onl-exa';
 import { provideStore } from '@ngrx/store';
 import {tokenReducer} from './Store/Reducers/token.reducer';
@@ -22,7 +22,7 @@ export const appConfig: ApplicationConfig = {
     provideToastr(), // Toastr providers
     {
         provide: API_BASE_URL,
-        useValue: BASE_TEST_URL,
+        useValue: DEV_URL,
     },
     provideStore({
         token: tokenReducer,

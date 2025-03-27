@@ -54,8 +54,8 @@
           "configurations": {
             "production": {
               "fileReplacements": [{
-                "replace": "./src/app/Environments/base-prod-url.ts",
-                "with": "./src/app/Environments/base-test-url.ts"
+                "replace": "./src/app/Environments/production.ts",
+                "with": "./src/app/Environments/development.ts"
               }],
               "budgets": [
                 {

@@ -7,7 +7,7 @@ import {setLoadingValue} from '../../../Store/Actions/loading.action';
 })
 export class LoadingService {
 
-  _store: Store<{ loading: boolean }> = inject(Store);
+  _store: Store<{ loading: boolean }> = inject (Store);
 
   show(isLoading: boolean): void {
     this._store.dispatch(setLoadingValue({value: isLoading}));
