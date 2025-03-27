@@ -8,6 +8,7 @@ import {AuthApiService} from 'auth-api-elev-onl-exa';
 import {SocialComponent} from '../../../Layouts/Components/auth-layout/social/social.component';
 import {ValidationMessagesComponent} from '../validation-messages/validation-messages.component';
 import {AuthBtnComponent} from '../auth-btn/auth-btn.component';
+import {SecureAccessService} from '../secure-access-component/Service/secure-access.service';
 
 @Component({
   selector: 'app-forget-password',
@@ -23,6 +24,7 @@ import {AuthBtnComponent} from '../auth-btn/auth-btn.component';
 })
 export class ForgetPasswordComponent implements OnInit, OnDestroy {
 
+  private readonly secureAccessService: SecureAccessService = inject (SecureAccessService);
   private readonly formBuilder: FormBuilder = inject (FormBuilder);
   private readonly authApiService: AuthApiService = inject (AuthApiService);
   private readonly router: Router = inject (Router);
@@ -64,7 +66,9 @@ export class ForgetPasswordComponent implements OnInit, OnDestroy {
         });
 
         this.authApiService.emailSignal.set(this.emailValue);
-        this.router.navigateByUrl('/verify-code');
+        this.secureAccessService.signal.set('verify');
+        this.router.navigate(['/secure-access'])
+
       },error: (err: any) => {
         this.toastrService.error(err.message, '', {
           progressBar: true,
