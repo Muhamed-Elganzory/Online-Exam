@@ -38,7 +38,7 @@ export class SignInComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.loginForm();
-    this.checkEmail();
+    this.checkEmailAndPassword();
   }
 
   loginForm(): void {
@@ -48,7 +48,7 @@ export class SignInComponent implements OnInit, OnDestroy {
     })
   }
 
-  checkEmail(): void {
+  checkEmailAndPassword(): void {
     if (this.authApiService.emailSignal() || this.authApiService.passwordSignal()){
       this.emailValue = this.authApiService.emailSignal();
       this.passwordValue = this.authApiService.passwordSignal();
