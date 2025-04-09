@@ -8,7 +8,7 @@ import {ToastrService} from 'ngx-toastr';
 import {AuthApiService} from 'auth-api-elev-onl-exa';
 import {setToken} from '../../../../Store/Actions/token.action';
 import {ValidationMessagesComponent} from '../validation-messages/validation-messages.component';
-import {SocialComponent} from '../../../Layouts/Components/auth-layout/social/social.component';
+import {SocialComponent} from '../../../Layouts/Components/auth-layout/Components/social/social.component';
 import {AuthBtnComponent} from '../auth-btn/auth-btn.component';
 
 @Component({
@@ -26,7 +26,7 @@ import {AuthBtnComponent} from '../auth-btn/auth-btn.component';
 })
 export class SignUpComponent implements OnInit, OnDestroy {
 
-  private authSubscription!: Subscription;
+  private subscription!: Subscription;
   private readonly store: Store = inject (Store);
   private readonly router: Router = inject (Router);
   private readonly formBuilder: FormBuilder = inject (FormBuilder);
@@ -48,6 +48,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.signUpForm();
+    this.subscription = new Subscription();
   }
 
   signUpForm(): void {
@@ -86,7 +87,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.injectUserNameToForm();
     this.setEmailAndPasswordToInput();
 
-    this.authSubscription = this.authApiService.signUp(this.signUpFormGroup.value).subscribe({
+    const authSubscription: Subscription = this.authApiService.signUp(this.signUpFormGroup.value).subscribe({
       next: (res: any): void => {
         this.toastrService.success(res.message, '', {
           progressBar: true,
@@ -106,6 +107,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
     });
 
     this.isLoading = false;
+    this.subscription.add(authSubscription);
   }
 
   showPassword(): void{
@@ -134,8 +136,8 @@ export class SignUpComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(){
-    if(this.authSubscription){
-      this.authSubscription.unsubscribe();
+    if(this.subscription){
+      this.subscription.unsubscribe();
     }
   }
 }

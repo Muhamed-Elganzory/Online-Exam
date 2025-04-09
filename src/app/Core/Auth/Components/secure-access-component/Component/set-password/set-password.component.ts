@@ -3,7 +3,7 @@ import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {ToastrService} from 'ngx-toastr';
 import {AuthApiService} from 'auth-api-elev-onl-exa';
-import {SocialComponent} from "../../../../../Layouts/Components/auth-layout/social/social.component";
+import {SocialComponent} from "../../../../../Layouts/Components/auth-layout/Components/social/social.component";
 import {ValidationMessagesComponent} from '../../../validation-messages/validation-messages.component';
 import {AuthBtnComponent} from '../../../auth-btn/auth-btn.component';
 import {Router} from '@angular/router';

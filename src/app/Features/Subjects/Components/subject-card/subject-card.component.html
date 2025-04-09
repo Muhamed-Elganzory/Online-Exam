@@ -1,0 +1,8 @@
+<!-- (click)="getAllExamsOnSubject(subject._id)" -->
+<div  [routerLink]="['/home/exam-list', subject._id]" class="relative m-auto w-full sm:x rounded-2xl shadow-md overflow-hidden cursor-pointer transition-transform duration-300 hover:scale-105">
+  <img [src]="subject.icon" [alt]="subject.name" class="w-full rounded-2xl h-72">
+  <div class="text-white bg-card absolute bottom-7 p-5 rounded-2xl left-1/2 transform -translate-x-1/2 w-95 sm:w-60 xl:w-60 2xl:w-75">
+    <h3 class="font-medium text-[13px]">{{ subject.name }}</h3>
+    <p class="font-light text-[13px]">Voluptatem aut ut dignissimos blanditiis</p>
+  </div>
+</div>

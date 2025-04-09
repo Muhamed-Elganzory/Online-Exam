@@ -61,4 +61,5 @@ export class AuthApiService implements AuthApi {
       catchError((err: any): Observable <any> => throwError((): SignInUpErr => this.authAPIAdaptorService.adaptErr(err)))
     );
   }
+
 }

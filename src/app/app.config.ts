@@ -12,12 +12,13 @@ import { provideEffects } from '@ngrx/effects';
 import {TokenEffect} from './Store/Effects/token.effect';
 import {loadingInterceptor} from './Core/Interceptors/loading.interceptor';
 import {loadingReducer} from './Store/Reducers/loading.reducer';
+import {tokenInterceptor} from './Core/Interceptors/token.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withHashLocation()),
-    provideHttpClient(withFetch(), withInterceptors([loadingInterceptor])),
+    provideHttpClient(withFetch(), withInterceptors([loadingInterceptor, tokenInterceptor])),
     provideAnimations(), // required animations providers
     provideToastr(), // Toastr providers
     {

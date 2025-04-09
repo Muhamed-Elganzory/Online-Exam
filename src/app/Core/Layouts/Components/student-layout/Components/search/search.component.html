@@ -1,0 +1,31 @@
+<article class="max-w-screen-xl 2xl:m-auto sm:ml-45 xl:ml-40 ">
+    <form class="justify-between flex sm:justify-center items-center gap-3 pt-4" (ngSubmit)="startQuiz()">
+      <div class="relative">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+          </svg>
+        </div>
+        <input type="search" id="default-search" (input)="input()" [formControl]="searchFormControl" class="w-[195px] md:w-[310px] lg:w-[549px] xl:w-[800px] 2xl:w-5xl p-3 ps-10 text-sm text-gray-900 rounded-2xl bg-white shadow-2xl" placeholder="Search Quiz" required />
+      </div>
+      <button type="submit" class="cursor-pointer hidden sm:block text-white bg-second-color focus:ring-4 font-medium rounded-2xl text-sm px-8 sm:px-5 py-2">Start Quiz</button>
+      <img class="w-10 h-10 rounded-full cursor-pointer" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="Rounded avatar">
+    </form>
+</article>
+
+<!--
+<article class="max-w-screen-xl ">
+    <form class="justify-between bg-amber-200 px-4 flex sm:justify-center items-center gap-3 pt-4 sm:pl-50 md:pl-40 xl:pl-30 2xl:pl-40">
+      <div class="relative">
+        <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
+          <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+            <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+          </svg>
+        </div>
+        <input type="search" id="default-search" class="w-[200px] md:w-[300px] lg:w-xl xl:w-3xl 2xl:w-5xl p-3 ps-10 text-sm text-gray-900 rounded-2xl bg-white shadow-2xl" placeholder="Search Quiz" required />
+      </div>
+      <button type="button" class="cursor-pointer hidden sm:block text-white bg-blue-700 focus:ring-4 font-medium rounded-2xl text-sm px-8 sm:px-5 py-2">Start Quiz</button>
+      <img class="w-10 h-10 rounded-full cursor-pointer" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="Rounded avatar">
+    </form>
+</article>
+-->

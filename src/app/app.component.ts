@@ -1,5 +1,5 @@
-import {Component, inject} from '@angular/core';
-import {Observable} from 'rxjs';
+import {ChangeDetectionStrategy, Component, inject, OnInit} from '@angular/core';
+import { Observable} from 'rxjs';
 import {AsyncPipe} from '@angular/common';
 import {RouterOutlet} from '@angular/router';
 import {MatProgressBar} from '@angular/material/progress-bar';
@@ -8,21 +8,22 @@ import {loadingSelector} from './Store/Selectors/loading.selector';
 
 @Component({
   selector: 'app-root',
-  imports: [
-    RouterOutlet,
-    MatProgressBar,
-    AsyncPipe,
-  ],
+    imports: [
+        RouterOutlet,
+        MatProgressBar,
+        AsyncPipe,
+    ],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
+export class AppComponent implements OnInit{
 
   private readonly loadingService: LoadingService = inject (LoadingService);
 
   loading$!: Observable <boolean>;
 
-  constructor() {
-    this.loading$ = this.loadingService._store.select(loadingSelector)
+  ngOnInit(): void {
+    this.loading$ = this.loadingService._store.select(loadingSelector);
   }
 }

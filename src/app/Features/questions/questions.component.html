@@ -1,0 +1,44 @@
+
+  <div id="popup-modal" tabindex="-1" class="bg-black/60 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
+    <div class="relative p-4 w-full max-w-3xl max-h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+      <div class="relative bg-white rounded-2xl shadow-sm p-6">
+        <!-- Header -->
+        <div class="flex items-center justify-between">
+          <h3 class="text-left text-sm font-medium text-second-color">Question {{ currentQuestion + 1 }} of {{ questionsList.length }}</h3>
+          <div class="flex items-center gap-2">
+            <img src="image.svg" alt="clock">
+            <span class="text-[#11CE19] font-normal text-xl">{{ timerOfExam() }}</span>
+          </div>
+        </div>
+        <div class="mt-8 mb-12">
+          <ul class="flex items-center gap-5">
+
+            @for(question of questionsList; track question._id) {
+              @if (isCurrentQuestion && question == questionsList[currentQuestion]) {
+                <li class="bg-second-color w-2.5 h-2.5 rounded-full"></li>
+              } @else {
+                <li class="bg-gray-300 w-2.5 h-2.5 rounded-full"></li>
+              }
+            }
+          </ul>
+        </div>
+        <!-- Body -->
+        <div class="p-4 md:p-5 text-left">
+
+          <h3 class="text-left mb-5 text-lg font-medium">{{ questionsList[currentQuestion]!.question }}</h3>
+          <ul>
+            @for (answer of questionsList[currentQuestion].answers; track $index){
+              <li class="mb-4 text-xl font-normal flex items-center gap-4 bg-[#EDEFF3] p-5 rounded-2xl">
+                <input type="checkbox" class="w-6 h-6">
+                {{ answer.answer }}
+              </li>
+            }
+          </ul>
+          <div class="flex justify-between gap-12 mt-12">
+            <button data-modal-hide="popup-modal" type="button" class="w-1/2 py-2.5 text-second-color font-medium border border-second-color rounded-2xl cursor-pointer" (click)="previousQuestion()">Back</button>
+            <button data-modal-hide="popup-modal" type="button" class="w-1/2 text-gray-600 bg-[#1D1B201F] rounded-2xl p-3 font-medium cursor-not-allowed" (click)="nextQuestion()">Next</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

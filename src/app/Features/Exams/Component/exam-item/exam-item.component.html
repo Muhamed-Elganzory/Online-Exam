@@ -1,0 +1,17 @@
+<article class="">
+  <div class="grid grid-cols-12 my-5 bg-[#F9F9F9] shadow rounded-2xl p-4 2xl:w-full max-w-screen-xl mx-auto sm:w-screen-xl">
+    <div class="col-span-1">
+      <img src="./Images/Group.png" alt="icon-exam" class="w-16 h-16">
+    </div>
+    <div class="col-span-11 flex justify-between items-center pl-6">
+      <div>
+        <h3 class="font-medium py-1">{{ exams.title.slice(0, 4).split(' ') }}</h3>
+        <h4 class="font-normal text-[#535353]">{{ exams.numberOfQuestions }} Questions</h4>
+      </div>
+      <div>
+        <h4 class="font-normal py-2">{{ exams.duration }} Minutes</h4>
+        <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="bg-second-color px-6 py-1 rounded-2xl text-white font-medium cursor-pointer" (click)="modalIsOpen()">Start</button>
+      </div>
+    </div>
+  </div>
+</article>

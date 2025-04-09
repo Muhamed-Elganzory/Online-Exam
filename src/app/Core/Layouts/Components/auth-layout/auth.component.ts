@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {RouterOutlet} from '@angular/router';
-import {WelcomeComponent} from '../welcome/welcome.component';
-import {AuthTabsComponent} from '../auth-tabs/auth-tabs.component';
+import {WelcomeComponent} from './Components/welcome/welcome.component';
+import {AuthTabsComponent} from './Components/auth-tabs/auth-tabs.component';
 
 @Component({
   selector: 'app-auth-layout',
