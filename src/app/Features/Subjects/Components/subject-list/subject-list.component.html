@@ -1,12 +1,14 @@
 <section class="bg-white rounded-lg shadow-2xl mt-10 sm:p-10 p-5 transition-transform m-auto xl:w-[1004px] 2xl:w-full sm:w-screen-xl sm:ml-60 2xl:ml-20">
   <div class=" ">
-    <div class="flex justify-between items-center text-second-color font-medium"> <!-- 2xl:w-full max-w-screen-xl mx-auto sm:w-screen-xl -->
+    <div class="flex justify-between items-center text-second-color font-medium">
       <p>Quizzes</p>
       <button (click)="getAllSubjects()" type="button" class="cursor-pointer">View All</button>
     </div>
     <div class="sm:p-5 pt-5 grid sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-8">
-      @for (subject of subjectList | search: searchTerm(); track subject._id) {
+      @for (subject of subjectList | searchSubjectList: searchTerm(); track subject._id) {
         <app-subject-card [subject]="subject"></app-subject-card>
+      } @empty {
+        <span class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl text-gray-400 font-bold font-mono">Not found data</span>
       }
     </div>
   </div>

@@ -1,41 +1,48 @@
-import {
-  Component,
-  computed,
-  inject,
-  OnDestroy,
-  OnInit,
-  signal,
-  Signal,
-  WritableSignal
-} from '@angular/core';
-import {ExamsService} from '../Exams/Service/exams.service';
+import {Component, computed, inject, Input, OnDestroy, OnInit, signal, Signal, WritableSignal} from '@angular/core';
 import {Subscription} from 'rxjs';
-import {QuestionService} from './Service/question.service';
-import {Questions} from './Model/questions';
+import {NgClass} from '@angular/common';
 import {ToastrService} from 'ngx-toastr';
+import {ReactiveFormsModule} from '@angular/forms';
+import {StoreAnswers} from './Model/store-answers';
+import {Answer, Questions} from './Model/questions';
+import {QuestionService} from './Service/question.service';
+import {ExamsService} from '../Exams/Service/exams.service';
+import {StoreAnswersService} from './Service/store-answers.service';
+import {ScoreComponent} from './Components/your-score/score.component';
 
 @Component({
   selector: 'app-questions',
-  imports: [],
+  imports: [
+    NgClass,
+    ScoreComponent,
+    ReactiveFormsModule,
+
+  ],
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.css',
 })
 export class QuestionsComponent implements OnInit, OnDestroy {
 
-  private readonly examsService: ExamsService = inject (ExamsService);
-  private readonly questionsService: QuestionService = inject (QuestionService);
-  private readonly toastrService: ToastrService = inject (ToastrService);
-
   subscription!: Subscription;
+  private readonly examsService: ExamsService = inject (ExamsService);
+  private readonly toastrService: ToastrService = inject (ToastrService);
+  private readonly questionsService: QuestionService = inject (QuestionService);
+  private readonly storeAnswersService: StoreAnswersService = inject (StoreAnswersService);
 
+  timerOfExam: WritableSignal <string> = signal('00:00');
   examId: Signal <string> = computed((): string => this.examsService.examID());
 
   intervalId: any;
-  duration: number = 25; // Alternative Time Of API
+  otherAnswer:any;
+  duration: number = 0.2; // Alternative Time Of API
+  correctAnswer: string = '';
   currentQuestion: number = 0;
-  isCurrentQuestion: boolean = true;
   questionsList: Questions [] = [];
-  timerOfExam: WritableSignal <string> = signal('00:00');
+  isCurrentQuestion: boolean = true;
+
+  @Input() _examModalIsOpen: boolean = false;
+
+  _modalYourScoreIsOpen: boolean = false;
 
   ngOnInit(): void {
     this.getQuestions();
@@ -47,8 +54,6 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       next: (res: any): void => {
         this.questionsList = res.questions;
         this.toastrService.success('Questions added successfully.');
-        console.log(res);
-        console.log(this.questionsList);
       }
     })
   }
@@ -67,17 +72,42 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       if(remainingTime <= 0) {
         this.timerOfExam.set('00:00');
         clearInterval(this.intervalId);
+        this._examModalIsOpen = false;
+        this._modalYourScoreIsOpen = true;
       } else {
         let minutes: number = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60)); // 25
         let seconds: number = Math.floor((remainingTime % (1000 * 60)) / 1000);
 
-        console.log(minutes);
-        console.log(seconds);
-        console.log(`${minutes}:${seconds < 10 ? '0' + seconds : seconds}`);
         this.timerOfExam.set(`${minutes}:${seconds < 10 ? '0' + seconds : seconds}`);
       }
     }, 1000);
   }
+
+  questionOfChosen(question: string,  keyOfCorrectAnswer: string, userAnswer: string, keyOfUserAnswer: string): void {
+    let _countOfCorrectAnswers: number = 0;
+    let _countOfIncorrectAnswers: number = 0;
+
+    this.correctAnswer = this.questionsList[this.currentQuestion].answers.find((answer: Answer): boolean => answer.key === keyOfCorrectAnswer)?.answer || '';
+    this.otherAnswer = this.questionsList[this.currentQuestion].answers.filter((answer: Answer): boolean => answer.answer != this.correctAnswer && answer.answer != userAnswer);
+
+    if(keyOfUserAnswer === keyOfCorrectAnswer) {
+      _countOfCorrectAnswers++;
+    } else {
+      _countOfIncorrectAnswers++;
+    }
+
+    this.storeAnswersService.storeAnswers.update((previousAnswer: StoreAnswers[]): StoreAnswers[] => [...previousAnswer, {
+      question: question,
+      correctAnswer: this.correctAnswer,
+      keyOfCorrectAnswer: keyOfCorrectAnswer,
+      userAnswer: userAnswer,
+      keyOfUserAnswer: keyOfUserAnswer,
+      countOfCorrectAnswers: _countOfCorrectAnswers,
+      countOfIncorrectAnswers: _countOfIncorrectAnswers,
+      otherAnswer: this.otherAnswer
+    }]);
+  }
+
 
   nextQuestion(): void {
     if(this.currentQuestion + 1 <= this.questionsList.length - 1) {

@@ -105,7 +105,6 @@ export class SetPasswordComponent implements OnInit, OnDestroy {
 
   setPasswordToInput(): void{
     this.authApiService.passwordSignal.set(this.setPasswordFormGroup.get('password')?.value);
-    console.log('password', this.setPasswordFormGroup.get('password')?.value);
   }
 
   goToSignin (): void{

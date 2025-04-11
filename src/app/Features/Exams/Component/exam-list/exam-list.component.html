@@ -2,8 +2,10 @@
   <div>
       <h2 class="font-medium">Front-End Quiz</h2>
   </div>
-  @for(exam of exams; track exam._id){
+  @for(exam of exams | searchExamList: searchTerm(); track exam._id) {
     <app-exam-item [exams]="exam" (modalToggled)="modalIsOpen($event)" (examId)="storeExamId($event)"></app-exam-item>
+  } @empty {
+    <span class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 text-2xl text-gray-400 font-bold font-mono">Not found data</span>
   }
 </section>
 
@@ -23,13 +25,13 @@
           <li class="mb-2 text-lg font-normal text-gray-500">Lorem ipsum dolor sit amet consectetur.</li>
           <li class="mb-2 text-lg font-normal text-gray-500">Lorem ipsum dolor sit amet consectetur.</li>
           <li class="mb-2 text-lg font-normal text-gray-500">Lorem ipsum dolor sit amet consectetur.</li>
-          <button data-modal-hide="popup-modal" type="button" class="w-full mt-12 py-2.5 px-5 font-semibold text-white bg-second-color rounded-2xl cursor-pointer" (click)="goToExam()">Start</button>
+          <button data-modal-hide="popup-modal" type="button" class="w-full mt-12 py-2.5 px-5 font-semibold text-white bg-second-color rounded-3xl cursor-pointer" (click)="goToExam()">Start</button>
         </div>
       </div>
     </div>
   </div>
 }
 
-@if(_examModalOpen){
-  <app-questions></app-questions>
+@if(_examModalOpen) {
+  <app-questions [_examModalIsOpen]="_examModalOpen"></app-questions>
 }

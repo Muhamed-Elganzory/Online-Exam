@@ -24,12 +24,12 @@ import {SecureAccessService} from '../../Service/secure-access.service';
 })
 export class VerifyCodeComponent implements OnInit, OnDestroy {
 
+  private authSubscription!: Subscription;
   private secureAccessService: SecureAccessService = inject (SecureAccessService);
   private readonly formBuilder: FormBuilder = inject (FormBuilder);
   private readonly authApiService: AuthApiService = inject (AuthApiService);
   private readonly router: Router = inject (Router);
   private readonly toastrService: ToastrService = inject(ToastrService)
-  private authSubscription!: Subscription;
 
   btnTitle: string = '';
   isLoading: boolean = false;
