@@ -16,7 +16,6 @@ import {ScoreComponent} from './Components/your-score/score.component';
     NgClass,
     ScoreComponent,
     ReactiveFormsModule,
-
   ],
   templateUrl: './questions.component.html',
   styleUrl: './questions.component.css',
