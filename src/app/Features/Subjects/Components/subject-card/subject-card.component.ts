@@ -1,6 +1,6 @@
 import {Component, Input} from '@angular/core';
-import {Subject} from '../../Model/subject';
 import {RouterLink} from '@angular/router';
+import {Subject} from '../../Model/subject';
 
 @Component({
   selector: 'app-subject-card',

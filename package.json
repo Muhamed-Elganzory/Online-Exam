@@ -26,6 +26,7 @@
     "@tailwindcss/postcss": "^4.0.14",
     "ajv": "^8.17.1",
     "auth-api-elev-onl-exa": "^1.0.17",
+    "chart.js": "^4.4.8",
     "flowbite": "^3.1.2",
     "jwt-decode": "^4.0.0",
     "ngx-cookie-service": "^19.1.2",

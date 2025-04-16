@@ -1,0 +1,9 @@
+<button type="button" class="absolute -top-5 transition duration-300" (click)="openInput()">
+  <svg class="w-5 h-5 text-white cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
+    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
+  </svg>
+</button>
+
+@if(isOpen){
+  <input type="search" id="default-search" [formControl]="searchControl" (input)="onSearch()" class="absolute -top-6 left-8 sm:hidden w-2xs p-2 ps-5 text-sm text-gray-900 rounded-2xl bg-white shadow-2xl" placeholder="Search Quiz" required />
+}

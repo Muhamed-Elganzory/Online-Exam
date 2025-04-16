@@ -1,17 +1,16 @@
 import {Component, computed, inject, OnDestroy, OnInit, Signal} from '@angular/core';
-import {SubjectCardComponent} from '../subject-card/subject-card.component';
-import {SubjectService} from '../../Service/subject.service';
 import {Subscription} from 'rxjs';
 import {Subject} from '../../Model/subject';
+import {SubjectService} from '../../Service/subject.service';
+import {SubjectCardComponent} from '../subject-card/subject-card.component';
+import {SearchSubjectListPipe} from '../../../../Shared/Pipes/searchSubjectList.pipe';
 import {SearchSignalService} from '../../../../Core/Layouts/Components/student-layout/Services/search-signal.service';
-import {SearchPipe} from '../../../../Shared/Pipes/search.pipe';
-import {ExamsService} from '../../../Exams/Service/exams.service';
 
 @Component({
   selector: 'app-subject-list',
   imports: [
     SubjectCardComponent,
-    SearchPipe,
+    SearchSubjectListPipe,
   ],
   templateUrl: './subject-list.component.html',
   styleUrl: './subject-list.component.css'
@@ -19,7 +18,6 @@ import {ExamsService} from '../../../Exams/Service/exams.service';
 export class SubjectListComponent implements OnInit, OnDestroy{
 
   private subscription!: Subscription;
-  // private readonly examsService: ExamsService = inject (ExamsService);
   private readonly subjectService: SubjectService = inject (SubjectService);
   private readonly searchSignalService: SearchSignalService = inject (SearchSignalService);
 
@@ -50,19 +48,6 @@ export class SubjectListComponent implements OnInit, OnDestroy{
     })
     this.subscription.add(subjectService);
   }
-
-  /*
-      getAllExamsOnSubject(subjectID: string): void{
-        console.log(subjectID);
-        const examsService: Subscription = this.examsService.getAllExamsOnSubject(subjectID).subscribe({
-          next: (res: any): void => {
-            console.log(subjectID);
-            console.log(res);
-          }
-        });
-        // this.subscription.add(examsService);
-      }
-  */
 
   ngOnDestroy(): void {
     if(this.subscription) {

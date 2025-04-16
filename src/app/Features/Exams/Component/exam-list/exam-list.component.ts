@@ -1,17 +1,19 @@
-import {Component, inject, OnDestroy, OnInit} from '@angular/core';
-import {ExamsService} from '../../Service/exams.service';
-import {ActivatedRoute, ParamMap, Router, RouterLink} from '@angular/router';
-import {Exams} from '../../Model/exams';
+import {Component, computed, inject, OnDestroy, OnInit, Signal} from '@angular/core';
 import {Subscription} from 'rxjs';
+import {Exams} from '../../Model/exams';
+import {ActivatedRoute} from '@angular/router';
+import {ExamsService} from '../../Service/exams.service';
 import {ExamItemComponent} from '../exam-item/exam-item.component';
 import {QuestionsComponent} from '../../../questions/questions.component';
+import {SearchExamListPipe} from '../../../../Shared/Pipes/search-exam-list.pipe';
+import {SearchSignalService} from '../../../../Core/Layouts/Components/student-layout/Services/search-signal.service';
 
 @Component({
   selector: 'app-exam-list',
   imports: [
     ExamItemComponent,
     QuestionsComponent,
-    // RouterLink
+    SearchExamListPipe,
   ],
   templateUrl: './exam-list.component.html',
   styleUrl: './exam-list.component.css'
@@ -21,6 +23,9 @@ export class ExamListComponent implements OnInit, OnDestroy {
   private readonly subscription: Subscription = new Subscription();
   private readonly examsService: ExamsService = inject (ExamsService);
   private readonly activatedRoute: ActivatedRoute = inject (ActivatedRoute);
+  private readonly searchSignalService: SearchSignalService = inject (SearchSignalService);
+
+  searchTerm: Signal <string> = computed((): string => this.searchSignalService.searchSignal());
 
   exams: Exams[] = [];
   examID: string = '';

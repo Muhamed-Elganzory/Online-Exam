@@ -8,11 +8,13 @@ export interface Questions {
   subject: Subject
   exam: Exam
   createdAt: string
+  userAnswer: string
 }
 
 export interface Answer {
   answer: string
   key: string
+  checked: boolean
 }
 
 export interface Subject {

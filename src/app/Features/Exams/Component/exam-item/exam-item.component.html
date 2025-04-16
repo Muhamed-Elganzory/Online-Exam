@@ -10,7 +10,11 @@
       </div>
       <div>
         <h4 class="font-normal py-2">{{ exams.duration }} Minutes</h4>
-        <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="bg-second-color px-6 py-1 rounded-2xl text-white font-medium cursor-pointer" (click)="modalIsOpen()">Start</button>
+        @if (answersIsReady()) {
+          <button data-modal-hide="popup-modal" type="button" class="bg-second-color px-6 py-1 rounded-2xl text-white font-medium cursor-pointer" (click)="showResult()">Answers</button>
+        } @else {
+          <button data-modal-target="popup-modal" data-modal-toggle="popup-modal" class="bg-second-color px-6 py-1 rounded-2xl text-white font-medium cursor-pointer" (click)="modalIsOpen()">Start</button>
+        }
       </div>
     </div>
   </div>
