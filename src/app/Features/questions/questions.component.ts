@@ -89,6 +89,9 @@ export class QuestionsComponent implements OnInit, OnDestroy {
     this.correctAnswer = this.questionsList[this.currentQuestion].answers.find((answer: Answer): boolean => answer.key === keyOfCorrectAnswer)?.answer || '';
     this.otherAnswer = this.questionsList[this.currentQuestion].answers.filter((answer: Answer): boolean => answer.answer != this.correctAnswer && answer.answer != userAnswer);
 
+    console.log(this.otherAnswer);
+    console.log(this.correctAnswer);
+
     if(keyOfUserAnswer === keyOfCorrectAnswer) {
       _countOfCorrectAnswers++;
     } else {
@@ -105,6 +108,7 @@ export class QuestionsComponent implements OnInit, OnDestroy {
       countOfIncorrectAnswers: _countOfIncorrectAnswers,
       otherAnswer: this.otherAnswer
     }]);
+    console.log(this.storeAnswersService.storeAnswers());
   }
 
 

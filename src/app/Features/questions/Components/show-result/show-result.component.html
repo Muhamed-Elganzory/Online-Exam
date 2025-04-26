@@ -1,32 +1,35 @@
 @if(closeModalIsClose_Open()){
   <div id="popup-modal" tabindex="-1" class="py-10 bg-black/60 overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-    <div class="relative p-4 w-full max-w-6xl max-h-full top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-      <div class="relative bg-white rounded-2xl shadow-2xl transition-all duration-300 ease-in-out scale-100 opacity-100">
+    <div class="relative p-4 w-full max-w-6xl max-h-[70vh] overflow-y-auto top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+    <div class="relative bg-white rounded-2xl shadow-2xl transition-all duration-300 ease-in-out scale-100 opacity-100">
         <div class="p-6 md:p-5 text-left">
           <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
             @for (answer of storeAnswers(); track answer.question) {
-              <div class="sm:col-span-1 lg:col-span-6 px-2 py-4 rounded-2xl shadow custom-shadow bg-[#F9F9F9]">
-                <h1 class="font-medium text-2xl pb-4">{{ answer.question }}</h1>
-                <!-- User Answer -->
-                <div class="flex items-center gap-4 p-7 rounded-2xl" [ngClass]="answer.userAnswer == answer.correctAnswer ? 'border border-[#11CE19] bg-[#CAF9CC]' : 'border border-[#CC1010] bg-[#F8D2D2]'">
-                  <input type="checkbox" checked="checked" class="min-w-5 min-h-5 pointer-events-none" [ngClass]="answer.userAnswer != answer.correctAnswer ? 'accent-[#CC1010]' : 'accent-[#11CE19]'">
-                  <span class="text-xl text-[#011234] overflow-auto">{{ answer.userAnswer }}</span>
+              <!-- answer.key === keyOfCorrectAnswer -->
+              @if(answer.keyOfCorrectAnswer != answer.keyOfUserAnswer){
+                <div class="sm:col-span-1 lg:col-span-6 px-2 py-4 rounded-2xl shadow custom-shadow bg-[#F9F9F9]">
+                  <h1 class="font-medium text-2xl pb-4">{{ answer.question }}</h1>
+                  <!-- User Answer -->
+                  <div class="flex items-center gap-4 p-7 rounded-2xl" [ngClass]="answer.userAnswer == answer.correctAnswer ? 'border border-[#11CE19] bg-[#CAF9CC]' : 'border border-[#CC1010] bg-[#F8D2D2]'">
+                    <input type="checkbox" checked="checked" class="min-w-5 min-h-5 pointer-events-none" [ngClass]="answer.userAnswer != answer.correctAnswer ? 'accent-[#CC1010]' : 'accent-[#11CE19]'">
+                    <span class="text-xl text-[#011234] overflow-auto">{{ answer.userAnswer }}</span>
+                  </div>
+                  <!-- Correct Answer -->
+                  @if(answer.userAnswer != answer.correctAnswer) {
+                    <div class="flex items-center gap-4 p-7 border border-[#11CE19] bg-[#CAF9CC] rounded-2xl mt-4">
+                      <input type="checkbox" checked="checked" class="min-w-5 min-h-5 accent-[#11CE19] pointer-events-none">
+                      <span class="text-xl text-[#011234] overflow-auto">{{ answer.correctAnswer }}</span>
+                    </div>
+                  }
+                  <!-- Other Answers -->
+                  @for (otherAnswer of answer.otherAnswer; track otherAnswer.answer) {
+                    <div class="flex items-center gap-4 p-7 mt-4 rounded-2xl bg-[#EDEFF3]">
+                      <input type="checkbox" class="min-w-5 min-h-5 rounded border-2 border-[#02369C] appearance-none pointer-events-none">
+                      <span class="text-xl text-[#011234] overflow-auto">{{ otherAnswer.answer }}</span>
+                    </div>
+                  }
                 </div>
-                <!-- Correct Answer -->
-                @if(answer.userAnswer != answer.correctAnswer) {
-                  <div class="flex items-center gap-4 p-7 border border-[#11CE19] bg-[#CAF9CC] rounded-2xl mt-4">
-                    <input type="checkbox" checked="checked" class="min-w-5 min-h-5 accent-[#11CE19] pointer-events-none">
-                    <span class="text-xl text-[#011234] overflow-auto">{{ answer.correctAnswer }}</span>
-                  </div>
-                }
-                <!-- Other Answers -->
-                @for (otherAnswer of answer.otherAnswer; track otherAnswer.answer) {
-                  <div class="flex items-center gap-4 p-7 mt-4 rounded-2xl bg-[#EDEFF3]">
-                    <input type="checkbox" class="min-w-5 min-h-5 rounded border-2 border-[#02369C] appearance-none pointer-events-none">
-                    <span class="text-xl text-[#011234] overflow-auto">{{ otherAnswer.answer }}</span>
-                  </div>
-                }
-              </div>
+              }
             }
           </div>
           <div class="flex justify-center mt-12">
