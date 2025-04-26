@@ -1,5 +1,5 @@
 <article class="max-w-screen-xl 2xl:m-auto sm:ml-45 xl:ml-40 ">
-    <form class="flex justify-between sm:justify-center items-center pt-4" (ngSubmit)="startQuiz()">
+    <form class="flex justify-between gap-4 sm:justify-center items-center pt-4" (ngSubmit)="startQuiz()">
       <div class="relative">
         <div class="absolute inset-y-0 start-0 items-center ps-3 pointer-events-none hidden sm:flex">
           <svg class="w-4 h-4 text-gray-500 dark:text-gray-400 cursor-pointer" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -11,7 +11,7 @@
         <app-search-icon class="sm:hidden block" (search)="handelSearch($event)"></app-search-icon>
         <!-- ---- -->
       </div>
-      <button type="submit" class="cursor-pointer hidden sm:block text-white bg-second-color focus:ring-4 font-medium rounded-2xl text-sm px-8 sm:px-5 py-2">Start Quiz</button>
-      <img class="w-10 h-10 rounded-full cursor-pointer transform -translate-y-2 object-fill object-right-top " src="./Images/ico.jpeg" alt="Rounded avatar">
+      <button type="submit" class="cursor-pointer hidden sm:block text-white bg-second-color focus:ring-4 font-medium rounded-2xl text-sm sm:px-3 md:px-3.5 xl:px-4 2xl:px-8 py-2">Start Quiz</button>
+      <img class="w-10 h-10 rounded-full cursor-pointer transform -translate-y-0.5 object-fill object-right-top " src="./Images/ico.jpeg" alt="Rounded avatar">
     </form>
 </article>
