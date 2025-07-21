@@ -26,13 +26,13 @@
         <div class="flex flex-col mb-8 relative">
           @let passwordControl = signUpFormGroup.get('password');
           <input [type]="isShowPassword? 'text' : 'password'" formControlName="password" id="password" [ngClass]="{'border-red-400': passwordControl?.touched && passwordControl!.invalid }" class="shadow-main-box-shadow border border-main-border-color rounded-lg p-3 bg-main-bg-inputs" placeholder="Password">
-          <button type="button" class="absolute top-4 right-5 cursor-pointer" (click)="showPassword()"><img src="./Images/auth/Group.svg"></button>
+          <button type="button" class="absolute top-4 ltr:right-5 cursor-pointer rtl:left-5" (click)="showPassword()"><img src="./Images/auth/Group.svg"></button>
           <app-validation-messages [controls]="passwordControl"></app-validation-messages>
         </div>
         <div class="flex flex-col mb-4 relative">
           @let rePasswordControl = signUpFormGroup.get('rePassword');
           <input [type]="isShow_rePassword? 'text' : 'password'" id="rePassword" formControlName="rePassword" [ngClass]="{'border-red-400': rePasswordControl?.touched && rePasswordControl!.invalid }" class="shadow-main-box-shadow border border-main-border-color rounded-lg p-3 bg-main-bg-inputs" placeholder="Confirm Password">
-          <button type="button" class="absolute top-4 right-5 cursor-pointer" (click)="show_rePassword()"><img src="./Images/auth/Group.svg"></button>
+          <button type="button" class="absolute top-4 ltr:right-5 cursor-pointer rtl:left-5" (click)="show_rePassword()"><img src="./Images/auth/Group.svg"></button>
           <app-validation-messages [controls]="rePasswordControl"></app-validation-messages>
         </div>
         <div class="ff-poppins font-normal text-center">
