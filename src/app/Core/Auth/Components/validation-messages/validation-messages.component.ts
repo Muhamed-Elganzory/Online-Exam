@@ -9,5 +9,5 @@ import {AbstractControl} from '@angular/forms';
   styleUrl: './validation-messages.component.css'
 })
 export class ValidationMessagesComponent {
-  @Input() controls!: AbstractControl | null;
+  @Input() controls!: AbstractControl;
 }
